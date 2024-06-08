@@ -4,8 +4,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 app = FastAPI(
-    title="Objek Wisata",
-    description="API untuk mengelola data objek wisata",
+    title="Rental Mobil",
+    description="API untuk mengelola data Rental Mobil",
     docs_url="/",  # Ubah docs_url menjadi "/"
 )
 
@@ -86,32 +86,50 @@ def get_data_pajak_from_web():
     else:
         raise HTTPException(status_code=response.status_code, detail="Gagal mengambil data PAJAK dari web hosting.")
 
-# Model untuk Data Pajak
-class Pajak(BaseModel):
-    id_pajak: int
-    jenis_pajak: str
-    tarif_pajak: float
-    besar_pajak: float
+# Model untuk Data Penyewaan
+class Penyewaan(BaseModel):
+    id_penyewaan: str
+    NIK: str
+    id_mobil: int
+    nomor_pesanan: str
+    tanggal_peminjaman: datetime
+    tanggal_pengembalian: datetime
+    durasi_sewa: int
+    
 
-# Endpoint untuk mendapatkan data pajak
-@app.get("/pajak", response_model=List[Pajak])
-def get_pajak():
-    data_pajak = get_data_pajak_from_web()
-    return data_pajak
+# Dummy data untuk wisata
+data_penyewaan = [
+    {"id_penyewaan": "001", "NIK": "101", "id_mobil": 1, "nomor_pesanan": "ORD001", "tanggal_peminjaman": "2024-03-20", "tanggal_pengembalian": "2024-03-25", "durasi_sewa": "5 hari"},
+    {"id_penyewaan": "002", "NIK": "102", "id_mobil": 2, "nomor_pesanan": "ORD002", "tanggal_peminjaman": "2024-04-10", "tanggal_pengembalian": "2024-04-12", "durasi_sewa": "2 hari"},
+    {"id_penyewaan": "003", "NIK": "103", "id_mobil": 3, "nomor_pesanan": "ORD003", "tanggal_peminjaman": "2024-05-01", "tanggal_pengembalian": "2024-05-05", "durasi_sewa": "4 hari"},
+    {"id_penyewaan": "004", "NIK": "104", "id_mobil": 4, "nomor_pesanan": "ORD004", "tanggal_peminjaman": "2024-06-15", "tanggal_pengembalian": "2024-06-18", "durasi_sewa": "3 hari"},
+    {"id_penyewaan": "005", "NIK": "105", "id_mobil": 5, "nomor_pesanan": "ORD005", "tanggal_peminjaman": "2024-07-20", "tanggal_pengembalian": "2024-07-25", "durasi_sewa": "5 hari"}
+]
 
-def get_pajak_index(id_pajak):
-    data_pajak = get_data_pajak_from_web()
-    for index, pajak in enumerate(data_pajak):
-        if pajak['id_pajak'] == id_pajak:
+@app.post("/penyewaan")
+def tambah_penyewaan(penyewaan: Penyewaan):
+    data_penyewaan.append(penyewaan.dict())
+    return {"message": "Data penyewaan berhasil ditambahkan."}
+
+# Endpoint untuk mendapatkan data penduduk
+@app.get("/nik, response_model=List[Penduduk])
+def get_penduduk():
+    data_penduduk = get_data_penduduk_from_web()
+    return data_penduduk
+
+def get_penduduk_index(NIK):
+    data_penduduk = get_data_penduduk_from_web()
+    for index, penduduk in enumerate(data_penduduk):
+        if penduduk['id_pajak'] == id_penduduk:
             return index
     return None
 
-@app.get("/pajak/{id_pajak}", response_model=Optional[Pajak])
-def get_pajak_by_id(id_pajak: int):
-    data_pajak = get_data_pajak_from_web()
-    for pajak in data_pajak:
-        if pajak['id_pajak'] == id_pajak:
-            return Pajak(**pajak)
+@app.get("/penduduk/{id_penduduk}", response_model=Optional[Penduduk])
+def get_penduduk_by_id(id_penduduk: int):
+    data_penduduk = get_data_penduduk_from_web()
+    for penduduk in data_penduduk:
+        if penduduk['id_pajak'] == id_penduduk:
+            return Penduduk(**penduduk)
     return None
 
 # Fungsi untuk mengambil data tourguide dari web hosting lain
