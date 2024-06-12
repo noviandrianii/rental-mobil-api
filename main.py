@@ -4,19 +4,21 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
 
-app.add_middleware( # type: ignore
-    CORSMiddleware,
-    allow_origins=["https://api-government.onrender.com"],  # Hanya domain ini yang diizinkan
-    allow_credentials=True,
-    allow_methods=["GET", "POST"],  # Hanya metode GET dan POST yang diizinkan
-    allow_headers=["Authorization", "Content-Type"],  # Hanya header ini yang diizinkan
-)
-
 app = FastAPI(
     title="Rental Mobil",
     description="API untuk mengelola data Rental Mobil",
     docs_url="/",  # Ubah docs_url menjadi "/"
 )
+
+app.add_middleware( # type: ignore
+    CORSMiddleware,
+    allow_origins=["https://rental-mobil-api.onrender.com/"],  # Hanya domain ini yang diizinkan
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],  # Hanya metode GET dan POST yang diizinkan
+    allow_headers=["Authorization", "Content-Type"],  # Hanya header ini yang diizinkan
+)
+
+
 
 @app.get("/")
 async def read_root():
