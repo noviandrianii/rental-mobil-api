@@ -6,7 +6,7 @@ import requests
 
 app.add_middleware( # type: ignore
     CORSMiddleware,
-    allow_origins=["https://rental-mobil-api.onrender.com"],  # Hanya domain ini yang diizinkan
+    allow_origins=["https://api-government.onrender.com/"],  # Hanya domain ini yang diizinkan
     allow_credentials=True,
     allow_methods=["GET", "POST"],  # Hanya metode GET dan POST yang diizinkan
     allow_headers=["Authorization", "Content-Type"],  # Hanya header ini yang diizinkan
@@ -312,7 +312,7 @@ def get_data_pendudukrental_from_web():
     else:
         raise HTTPException(status_code=response.status_code, detail="Gagal mengambil data Government dari web hosting.")
 
-# Model untuk Data NIK
+# Model untuk Data Penduduk
 class Penduduk(BaseModel):
     nik: int
     nama: str
