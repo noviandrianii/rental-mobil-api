@@ -304,28 +304,28 @@ def get_data_penduduk_from_web():
     else:
         raise HTTPException(status_code=response.status_code, detail="Gagal mengambil data Government dari web hosting.")
 
-# Model untuk Data Government
+# Model untuk Data NIK
 class Penduduk(BaseModel):
     nik: int
 
 # Endpoint untuk mendapatkan data NIK
-@app.get("/penduduk", response_model=List[Penduduk])
+@app.get("/pendudukrental", response_model=List[Penduduk])
 def get_penduduk():
     data_penduduk = get_data_penduduk_from_web()
     return data_penduduk
 
-def get_penduduk_index(id_penduduk):
+def get_penduduk_index(nik):
     data_penduduk = get_data_penduduk_from_web()
     for index, penduduk in enumerate(data_penduduk):
-        if penduduk['id_penduduk'] == id_penduduk:
+        if penduduk['nik'] == nik:
             return index
     return None
 
-@app.get("/penduduk/{id_penduduk}", response_model=Optional[Penduduk])
-def get_penduduk_by_id(id_penduduk: int):
+@app.get("/pendudukrental/{nik}", response_model=Optional[Penduduk])
+def get_penduduk_by_id(nik: int):
     data_penduduk = get_data_penduduk_from_web()
     for penduduk in data_penduduk:
-        if penduduk['id_penduduk'] == id_penduduk:
+        if penduduk['id_penduduk'] == nik:
             return Penduduk(**penduduk)
     return None
 
