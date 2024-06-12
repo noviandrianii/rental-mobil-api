@@ -370,6 +370,7 @@ def get_data_asuransi_from_web():
 # Model untuk Data Asuransi
 class Asuransi(BaseModel):
     id_asuransi: str
+    jenis_asuransi: str
 
 def get_asuransi_index(id_asuransi):
     data_asuransi = get_data_asuransi_from_web()
