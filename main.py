@@ -422,7 +422,7 @@ def get_data_government_from_web():
 
 # Model untuk Data Pajak
 class Government(BaseModel):
-    nik: 0
+    nik: int
     nama: str
 
 # Endpoint untuk mendapatkan data nik dan nama
@@ -439,7 +439,7 @@ def get_government_index(id_government):
     return None
 
 @app.get("/government/{id_government}", response_model=Optional[Government])
-def get_government_by_id(id_government: 0):
+def get_government_by_id(id_government: int):
     data_government = get_data_government_from_web()
     for government in data_government:
         if government['id_government'] == id_government:
