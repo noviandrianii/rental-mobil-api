@@ -2,6 +2,7 @@ from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import requests
+import httpx
 
 app = FastAPI(
     title="Rental Mobil",
@@ -412,13 +413,14 @@ def get_asuransi_by_id(id_asuransi: str):
 
 
 # Fungsi untuk mengambil data nik dan nama dari web hosting lain
-def get_data_government_from_web():
+async def get_data_government_from_web():
     url = "https://api-government.onrender.com/penduduk"  # Ganti dengan URL yang sebenarnya
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        raise HTTPException(status_code=response.status_code, detail="Gagal mengambil data GOVERNMENT dari web hosting.")
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise HTTPException(status_code=response.status_code, detail="Gagal mengambil data GOVERNMENT dari web hosting.")
 
 # Model untuk Data Pajak
 class Government(BaseModel):
