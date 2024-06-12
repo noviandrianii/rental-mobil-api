@@ -301,30 +301,30 @@ def get_data_penduduk_from_web():
     if response.status_code == 200:
         return response.json()
     else:
-        raise HTTPException(status_code=response.status_code, detail="Gagal mengambil data TOUR GUIDE dari web hosting.")
+        raise HTTPException(status_code=response.status_code, detail="Gagal mengambil data Government dari web hosting.")
 
-# Model untuk Data Tour Guide
+# Model untuk Data Government
 class Penduduk(BaseModel):
     nik: int
 
-# Endpoint untuk mendapatkan data Tour Guide
+# Endpoint untuk mendapatkan data NIK
 @app.get("/penduduk", response_model=List[Penduduk])
 def get_penduduk():
     data_penduduk = get_data_penduduk_from_web()
     return data_penduduk
 
-def get_penduduk_index(nik):
+def get_penduduk_index(id_penduduk):
     data_penduduk = get_data_penduduk_from_web()
     for index, penduduk in enumerate(data_penduduk):
-        if penduduk['nik'] == nik:
+        if penduduk['id_penduduk'] == id_penduduk:
             return index
     return None
 
-@app.get("/penduduk/{nik}", response_model=Optional[Penduduk])
-def get_penduduk_by_id(nik: str):
+@app.get("/penduduk/{id_penduduk}", response_model=Optional[Penduduk])
+def get_penduduk_by_id(id_penduduk: int):
     data_penduduk = get_data_penduduk_from_web()
     for penduduk in data_penduduk:
-        if penduduk['nik'] == nik:
+        if penduduk['id_penduduk'] == id_penduduk:
             return Penduduk(**penduduk)
     return None
 
