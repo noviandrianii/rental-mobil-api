@@ -313,19 +313,19 @@ def get_penduduk():
     data_penduduk = get_data_penduduk_from_web()
     return data_penduduk
 
-def get_government_index(id_government):
-    data_government = get_data_government_from_web()
-    for index, government in enumerate(data_government):
-        if government['id_government'] == id_government:
+def get_penduduk_index(id_penduduk):
+    data_penduduk = get_data_penduduk_from_web()
+    for index, penduduk in enumerate(data_penduduk):
+        if penduduk['id_penduduk'] == id_penduduk:
             return index
     return None
 
-@app.get("/penduduk/{id_government}", response_model=Optional[Government])
-def get_government_by_id(id_government: str):
-    data_government = get_data_government_from_web()
-    for government in data_government:
-        if government['id_government'] == id_government:
-            return Government(**government)
+@app.get("/penduduk/{id_penduduk}", response_model=Optional[Penduduk])
+def get_penduduk_by_id(id_penduduk: str):
+    data_penduduk = get_data_penduduk_from_web()
+    for penduduk in data_penduduk:
+        if penduduk['id_penduduk'] == id_penduduk:
+            return Penduduk(**penduduk)
     return None
 
 
