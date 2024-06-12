@@ -296,7 +296,7 @@ def delete_pelanggan(nomor_telepon: str):
 
 
 # Endpoint untuk mendapatkan data penduduk
-def get_data_penduduk_from_web():
+def get_data_pendudukrental_from_web():
     url = "https://api-government.onrender.com/pendudukrental"  # Ganti dengan URL yang sebenarnya
     response = requests.get(url)
     if response.status_code == 200:
@@ -307,26 +307,27 @@ def get_data_penduduk_from_web():
 # Model untuk Data NIK
 class Penduduk(BaseModel):
     nik: int
+    nama: str
 
 # Endpoint untuk mendapatkan data NIK
 @app.get("/pendudukrental", response_model=List[Penduduk])
-def get_penduduk():
-    data_penduduk = get_data_penduduk_from_web()
-    return data_penduduk
+def get_pendudukrental():
+    data_pendudukrental = get_data_pendudukrental_from_web()
+    return data_pendudukrental
 
-def get_penduduk_index(nik):
-    data_penduduk = get_data_penduduk_from_web()
-    for index, penduduk in enumerate(data_penduduk):
-        if penduduk['nik'] == nik:
+def get_pendudukrental_index(nik):
+    data_pendudukrental = get_data_pendudukrental_from_web()
+    for index, Penduduk in enumerate(data_pendudukrental):
+        if Penduduk['nik'] == nik:
             return index
     return None
 
 @app.get("/pendudukrental/{nik}", response_model=Optional[Penduduk])
-def get_penduduk_by_id(nik: int):
-    data_penduduk = get_data_penduduk_from_web()
-    for penduduk in data_penduduk:
-        if penduduk['id_penduduk'] == nik:
-            return Penduduk(**penduduk)
+def get_pendudukrental_by_id(nik: int):
+    data_pendudukrental = get_data_pendudukrental_from_web()
+    for Penduduk in data_pendudukrental:
+        if Penduduk['nik'] == nik:
+            return Penduduk(**Penduduk)
     return None
 
 
@@ -413,7 +414,7 @@ def get_asuransi_by_id(id_asuransi: str):
 
 
 # Fungsi untuk mengambil data nik dan nama dari web hosting lain
-def get_data_government_from_web():
+#def get_data_government_from_web():
     url = "https://api-government.onrender.com/pendudukrental"  # Ganti dengan URL yang sebenarnya
     response = requests.get(url)
     if response.status_code == 200:
@@ -422,25 +423,25 @@ def get_data_government_from_web():
         raise HTTPException(status_code=response.status_code, detail="Gagal mengambil data GOVERNMENT dari web hosting.")
 
 # Model untuk Data Pajak
-class Government(BaseModel):
+#class Government(BaseModel):
     nik: int
     nama: str
 
 # Endpoint untuk mendapatkan data nik dan nama
-@app.get("/government", response_model=List[Government])
-def get_government():
+#@app.get("/government", response_model=List[Government])
+#def get_government():
     data_government = get_data_government_from_web()
     return data_government
 
-def get_government_index(id_government):
+#def get_government_index(id_government):
     data_government = get_data_government_from_web()
     for index, government in enumerate(data_government):
         if government['id_government'] == id_government:
             return index
     return None
 
-@app.get("/government/{id_government}", response_model=Optional[Government])
-def get_government_by_id(id_government: int):
+#@app.get("/government/{id_government}", response_model=Optional[Government])
+#def get_government_by_id(id_government: int):
     data_government = get_data_government_from_web()
     for government in data_government:
         if government['id_government'] == id_government:
