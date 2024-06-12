@@ -317,17 +317,17 @@ def get_pendudukrental():
 
 def get_pendudukrental_index(nik):
     data_pendudukrental = get_data_pendudukrental_from_web()
-    for index, Penduduk in enumerate(data_pendudukrental):
-        if Penduduk['nik'] == nik:
+    for index, penduduk in enumerate(data_pendudukrental):
+        if penduduk[nik] == nik:
             return index
     return None
 
 @app.get("/pendudukrental/{nik}", response_model=Optional[Penduduk])
 def get_pendudukrental_by_id(nik: int):
     data_pendudukrental = get_data_pendudukrental_from_web()
-    for Penduduk in data_pendudukrental:
-        if Penduduk['nik'] == nik:
-            return Penduduk(**Penduduk)
+    for penduduk in data_pendudukrental:
+        if penduduk[nik] == nik:
+            return Penduduk(**penduduk)
     return None
 
 
