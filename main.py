@@ -313,6 +313,22 @@ def get_penduduk():
     data_penduduk = get_data_penduduk_from_web()
     return data_penduduk
 
+def get_government_index(id_government):
+    data_government = get_data_government_from_web()
+    for index, government in enumerate(data_government):
+        if government['id_government'] == id_government:
+            return index
+    return None
+
+@app.get("/penduduk/{id_government}", response_model=Optional[Government])
+def get_government_by_id(id_government: str):
+    data_government = get_data_government_from_web()
+    for government in data_government:
+        if government['id_government'] == id_government:
+            return Government(**government)
+    return None
+
+
 
 
 
@@ -370,7 +386,7 @@ def get_data_asuransi_from_web():
 # Model untuk Data Asuransi
 class Asuransi(BaseModel):
     id_asuransi: str
-    jenis_asuransi: str
+
 
 def get_asuransi_index(id_asuransi):
     data_asuransi = get_data_asuransi_from_web()
@@ -395,7 +411,7 @@ def get_asuransi_by_id(id_asuransi: str):
 
 
 
-# Fungsi untuk mengambil data pajak dari web hosting lain
+# Fungsi untuk mengambil data nik dan nama dari web hosting lain
 def get_data_government_from_web():
     url = "https://api-government.onrender.com/penduduk"  # Ganti dengan URL yang sebenarnya
     response = requests.get(url)
@@ -409,7 +425,7 @@ class Government(BaseModel):
     nik: int
     nama: str
 
-# Endpoint untuk mendapatkan data pajak
+# Endpoint untuk mendapatkan data nik dan nama
 @app.get("/government", response_model=List[Government])
 def get_government():
     data_government = get_data_government_from_web()
