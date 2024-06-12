@@ -313,18 +313,18 @@ def get_penduduk():
     data_penduduk = get_data_penduduk_from_web()
     return data_penduduk
 
-def get_penduduk_index(id_penduduk):
+def get_penduduk_index(nik):
     data_penduduk = get_data_penduduk_from_web()
     for index, penduduk in enumerate(data_penduduk):
-        if penduduk['id_penduduk'] == id_penduduk:
+        if penduduk['nik'] == nik:
             return index
     return None
 
-@app.get("/penduduk/{id_penduduk}", response_model=Optional[Penduduk])
-def get_penduduk_by_id(id_penduduk: str):
+@app.get("/penduduk/{nik}", response_model=Optional[Penduduk])
+def get_penduduk_by_id(nik: str):
     data_penduduk = get_data_penduduk_from_web()
     for penduduk in data_penduduk:
-        if penduduk['id_penduduk'] == id_penduduk:
+        if penduduk['nik'] == nik:
             return Penduduk(**penduduk)
     return None
 
