@@ -297,7 +297,7 @@ def delete_pelanggan(nomor_telepon: str):
 
 # Endpoint untuk mendapatkan data penduduk
 def get_data_penduduk_from_web():
-    url = "https://api-government.onrender.com/penduduk"  # Ganti dengan URL yang sebenarnya
+    url = "https://api-government.onrender.com/pendudukrental"  # Ganti dengan URL yang sebenarnya
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
@@ -414,7 +414,7 @@ def get_asuransi_by_id(id_asuransi: str):
 
 # Fungsi untuk mengambil data nik dan nama dari web hosting lain
 def get_data_government_from_web():
-    url = "https://api-government.onrender.com/penduduk"  # Ganti dengan URL yang sebenarnya
+    url = "https://api-government.onrender.com/pendudukrental"  # Ganti dengan URL yang sebenarnya
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
