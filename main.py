@@ -318,7 +318,7 @@ def get_pendudukrental():
 def get_pendudukrental_index(nik):
     data_pendudukrental = get_data_pendudukrental_from_web()
     for index, penduduk in enumerate(data_pendudukrental):
-        if penduduk[nik] == nik:
+        if penduduk["nik"] == nik:
             return index
     return None
 
@@ -326,7 +326,7 @@ def get_pendudukrental_index(nik):
 def get_pendudukrental_by_id(nik: int):
     data_pendudukrental = get_data_pendudukrental_from_web()
     for penduduk in data_pendudukrental:
-        if penduduk[nik] == nik:
+        if penduduk["nik"] == nik:
             return Penduduk(**penduduk)
     return None
 
