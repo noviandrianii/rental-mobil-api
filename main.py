@@ -437,7 +437,7 @@ class Government(BaseModel):
     nik: int
 
 #Endpoint untuk mendapatkan data nik dan nama
-@app.get("/government", response_model=List[Government])
+@app.get("/penduduk", response_model=List[Government])
 def get_government():
     data_government = get_data_government_from_web()
     return data_government
@@ -449,7 +449,7 @@ def get_government_index(nik):
             return index
     return None
 
-@app.get("/government/{nik}", response_model=Optional[Government])
+@app.get("/penduduk/{nik}", response_model=Optional[Government])
 def get_government_by_id(nik: int):
     data_government = get_data_government_from_web()
     for government in data_government:
