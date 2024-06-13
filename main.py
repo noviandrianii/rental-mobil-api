@@ -526,7 +526,7 @@ def get_bank():
     return data_bank
 
 @app.get("/bank/{id}", response_model=Optional[Bank])
-def get_bank_by_id(id: str):
+def get_bank_by_id(id: int):
     data_bank = get_data_bank_from_web()
     for bank in data_bank:
         if bank['id'] == id:
