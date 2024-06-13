@@ -132,7 +132,7 @@ def get_penyewaan_by_id(id_penyewaan: str):
             return Penyewaan(**penyewaan)
     return None
 
-# Endpoint untuk memperbarui data pengembalian dengan hanya memasukkan id_pengembalian
+# Endpoint untuk memperbarui data penyewaan dengan hanya memasukkan id_penyewaan
 @app.put("/penyewaan/{id_penyewaan}")
 def update_penyewaan_by_id(id_penyewaan: str, penyewaan_baru: Penyewaan):
     index = get_penyewaan_index(id_penyewaan)
@@ -423,8 +423,8 @@ def get_asuransi_by_id(id_asuransi: str):
 
 
 
-# Fungsi untuk mengambil data nik dan nama dari web hosting lain
-#def get_data_government_from_web():
+#Fungsi untuk mengambil data nik dan nama dari web hosting lain
+def get_data_government_from_web():
     url = "https://api-government.onrender.com/pendudukrental"  # Ganti dengan URL yang sebenarnya
     response = requests.get(url)
     if response.status_code == 200:
@@ -432,29 +432,28 @@ def get_asuransi_by_id(id_asuransi: str):
     else:
         raise HTTPException(status_code=response.status_code, detail="Gagal mengambil data GOVERNMENT dari web hosting.")
 
-# Model untuk Data Pajak
-#class Government(BaseModel):
+#Model untuk Data NIK
+class Government(BaseModel):
     nik: int
-    nama: str
 
-# Endpoint untuk mendapatkan data nik dan nama
-#@app.get("/government", response_model=List[Government])
-#def get_government():
+#Endpoint untuk mendapatkan data nik dan nama
+@app.get("/government", response_model=List[Government])
+def get_government():
     data_government = get_data_government_from_web()
     return data_government
 
-#def get_government_index(id_government):
+def get_government_index(nik):
     data_government = get_data_government_from_web()
     for index, government in enumerate(data_government):
-        if government['id_government'] == id_government:
+        if government['nik'] == nik:
             return index
     return None
 
-#@app.get("/government/{id_government}", response_model=Optional[Government])
-#def get_government_by_id(id_government: int):
+@app.get("/government/{nik}", response_model=Optional[Government])
+def get_government_by_id(nik: int):
     data_government = get_data_government_from_web()
     for government in data_government:
-        if government['id_government'] == id_government:
+        if government['nik'] == nik:
             return Government(**government)
     return None
 
